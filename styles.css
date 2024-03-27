@@ -1,0 +1,27 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#game {
+    background-color: #e6ecff;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+#board {
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); 
+    grid-gap: 10px;
+}
+
+img {
+    width: 100px;
+    height: 150px;
+}
