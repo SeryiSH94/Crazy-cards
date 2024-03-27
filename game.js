@@ -66,3 +66,53 @@ function initialiseGame(numPairs) {
 }
 
 initialiseGame(9);
+
+cards = document.querySelectorAll(".card");
+
+function flipCard() {
+/**
+ * Flips the card that was clicked.
+ */  
+
+    this.dataset.flipped = true;
+
+    switch (this.dataset.value) {
+        case "1":
+            document.getElementById(this.id).querySelector("img").src = "./img/front-1.jpeg";
+            break;
+        case "2":
+            document.getElementById(this.id).querySelector("img").src = "./img/front-2.jpeg";
+            break;
+        case "3":
+            document.getElementById(this.id).querySelector("img").src = "./img/front-3.jpeg";
+            break;
+        case "4":
+            document.getElementById(this.id).querySelector("img").src = "./img/front-4.jpeg";
+            break;  
+        case "5":
+            document.getElementById(this.id).querySelector("img").src = "./img/front-5.jpeg";
+            break;    
+        case "6":
+            document.getElementById(this.id).querySelector("img").src = "./img/front-6.jpeg";
+            break;  
+        case "7":
+            document.getElementById(this.id).querySelector("img").src = "./img/front-7.jpeg";
+            break;
+        case "8":
+            document.getElementById(this.id).querySelector("img").src = "./img/front-8.jpeg";
+            break;
+        case "9":
+            document.getElementById(this.id).querySelector("img").src = "./img/front-9.jpeg";
+            break;    
+        default:
+            break;                                    
+    }  
+}
+
+cards.forEach(function(card) {
+/**
+ * Identifies the card that was clicked.
+ */  
+
+    card.addEventListener("click", flipCard);
+});
