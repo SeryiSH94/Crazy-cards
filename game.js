@@ -29,6 +29,7 @@ function injectCards(cards) {
     for (i = 0; i < cards.length; i++) {
         this.element = document.createElement("div");
         this.element.id = (i + 1);
+        cards[i].id = this.element.id;
         this.element.className = "card";
         this.element.dataset.value = cards[i].value;   
         this.element.dataset.flipped = cards[i].flipped;
@@ -37,7 +38,7 @@ function injectCards(cards) {
         board.appendChild(this.element);
 
         this.element = document.createElement("img");
-        this.element.src = "./img/back.jpeg";
+        this.element.src = cards[i].backImg;
     
         const card = document.getElementById(i + 1);
         card.appendChild(this.element);
@@ -54,7 +55,7 @@ function initialiseGame(numPairs) {
     let card;
 
     for (i = 0; i < numPairs; i++) {
-        card = new CreateCard(i + 1);
+        card = new CreateCard(i + 1, "./img/front-" + (i + 1) + ".jpeg");
         cards[i] = card;
     }
 
