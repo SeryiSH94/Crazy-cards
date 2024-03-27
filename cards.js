@@ -4,7 +4,6 @@ function CreateCard(value,img) {
  * @param  {number}
  */     
 
-    this.id = 0;
     this.value = value;
     this.flipped = false;
     this.frontImg = img;
