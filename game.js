@@ -29,6 +29,7 @@ function injectCards(cards) {
     for (i = 0; i < cards.length; i++) {
         this.element = document.createElement("div");
         this.element.id = (i + 1);
+        cards[i].id = this.element.id;
         this.element.className = "card";
         this.element.dataset.value = cards[i].value;
         this.element.dataset.flipped = cards[i].flipped;
@@ -41,8 +42,8 @@ function injectCards(cards) {
 
         const card = document.getElementById(i + 1);
         card.appendChild(this.element);
-        console.log(i);
-        console.log(cards[i]);
+        // console.log(i);
+        // console.log(cards[i]);
     }
 }
 
@@ -79,42 +80,19 @@ function flipCard() {
         this.dataset.flipped = true;
         cards[this.id - 1].flipped = true;
 
-        switch (this.dataset.value) {
-            case "1":
-                document.getElementById(this.id).querySelector("img").src = "./img/front-1.jpeg";
-                break;
-            case "2":
-                document.getElementById(this.id).querySelector("img").src = "./img/front-2.jpeg";
-                break;
-            case "3":
-                document.getElementById(this.id).querySelector("img").src = "./img/front-3.jpeg";
-                break;
-            case "4":
-                document.getElementById(this.id).querySelector("img").src = "./img/front-4.jpeg";
-                break;
-            case "5":
-                document.getElementById(this.id).querySelector("img").src = "./img/front-5.jpeg";
-                break;
-            case "6":
-                document.getElementById(this.id).querySelector("img").src = "./img/front-6.jpeg";
-                break;
-            case "7":
-                document.getElementById(this.id).querySelector("img").src = "./img/front-7.jpeg";
-                break;
-            case "8":
-                document.getElementById(this.id).querySelector("img").src = "./img/front-8.jpeg";
-                break;
-            case "9":
-                document.getElementById(this.id).querySelector("img").src = "./img/front-9.jpeg";
-                break;
-            default:
-                break;
-        }
-
+        document.getElementById(this.id).querySelector("img").src = "./img/front-" + this.dataset.value + ".jpeg";
+        console.log(flippedCards);
+        // setTimeout(() => {
+            
+        // },2000);
         flippedCards++;
+        if (flippedCards  == 2){
+            const cards = document.querySelectorAll("div[data-flipped='true']");
+        console.log("dentro");   
+            matchPair(cards);
+        }
     }
     else {
-        matchPair();
         flippedCards = 0;
     }
 }
@@ -128,105 +106,23 @@ cards2.forEach(function (card) {
     card.addEventListener("click", flipCard);
 });
 
-function matchPair() {
-    let firstCard = 0;
-    let secondCard = 0;
-    let firstCardId = 0;
-    let secondCardId = 0;
-    for (i = 0; i < cards.length; i++) {
-        if (cards[i].flipped) {
-            if (firstCard === 0) {
-                firstCard = cards[i].value;
-            } else if (secondCard === 0) {
-                secondCard = cards[i].value;
-                break;
-            }
-        }
-    } console.log(i);
-
-    if (firstCard != secondCard) {
-        console.log("distintos");
-        console.log(cards.id);
-        console.log(firstCardId);
-        console.log(secondCardId);
-
-        cards[firstCardId - 1].flipped = false;
-        document.getElementById(firstCardId).flipped = false;
-        document.getElementById(firstCardId).querySelector("img").src = cards[firstCardId - 1].backImg;
-
+function matchPair(selectedCards) {
+    console.log(selectedCards[0].getAttribute("data-value"));
+    console.log(selectedCards[1].getAttribute("data-value"));
+    if (selectedCards[0].getAttribute("data-value") != selectedCards[1].getAttribute("data-value") ){
+        cards[selectedCards[0].getAttribute("id")].flipped = false;
+        document.getElementById(selectedCards[0].id).flipped = false;
+        // document.getElementById(selectedCards[0].id).querySelector("img").src = cards[selectedCards[0].getAttribute("id")].backImg;
+        setTimeout(() => {
+            document.getElementById(selectedCards[0].id).querySelector("img").src = cards[selectedCards[0].getAttribute("id")].backImg;
+        }, 1000);
         
 
-        cards[secondCardId - 1].flipped = false;
-        document.getElementById(secondCardId).flipped = false;
-        document.getElementById(secondCardId).querySelector("img").src = cards[secondCardId - 1].backImg;
-    } 
+        cards[selectedCards[1].getAttribute("id")].flipped = false;
+        document.getElementById(selectedCards[1].id).flipped = false;
+        // document.getElementById(selectedCards[1].id).querySelector("img").src = cards[selectedCards[1].getAttribute("id")].backImg;
+        setTimeout(() => {
+            document.getElementById(selectedCards[1].id).querySelector("img").src = cards[selectedCards[1].getAttribute("id")].backImg;
+        }, 1000);
+    }
 }
-    // if (cards[i].flipped == true) {
-    //     firstCard = cards[i].value;
-    //     firstCardId = cards[i].id;
-    //     console.log(firstCard);
-    // } if (cards[i].flipped == true) {
-    //     secondCard = cards[i].value;
-    //     secondCardId = cards[i].id;
-    //     console.log(secondCard);
-    // } 
-
-    // for (i = 0; i < cards.length; i++)
-    //  {
-    //     console.log(cards[i]);
-    //     // console.log(secondCard);
-    //     if ((cards[i].flipped == true) && firstCard) {
-    //         firstCard = cards[i].value;
-    //         firstCardId = cards[i].id;
-    //     } else if ((cards[i].flipped == true) && !firstCard) {
-    //         secondCard = cards[i].value;
-    //         secondCardId = cards[i].id;
-    //         break;
-    //     }
-    // }
-
-    
-
-
-
-// function a () {
-//     if (matchPair(a,b)) {
-//         console.log("ok")
-//     }
-//     else (isthisflipped)
-// }
-
-// function flipCards (a,b) {
-
-// }
-// var primerCarta = null;
-// var segundoCarta = null;
-
-// // Manejar evento de clic en las cartas
-// document.querySelectorAll('.card').forEach(item => {
-//     item.addEventListener('click', event => {
-//         var valueCartaClicada = event.target.; // Obtener el Value de la carta clicada
-
-//         if (primerCarta === null) {
-//             // Si es la primera carta clicada, almacenar su ID en la variable primerCarta
-//             primerCarta = valueCartaClicada;
-//             console.log('Primera carta seleccionada: ' + primerCarta);
-//         } else {
-//             // Si es la segunda carta clicada, almacenar su Value en la variable segundoCarta
-//             segundoCarta = valueCartaClicada;
-//             console.log('Segunda carta seleccionada: ' + segundoCarta);
-
-//             // Aquí puedes realizar la comparación entre primerCarta y segundoCarta como lo necesites
-//             // Por ejemplo:
-//             if (primerCarta === segundoCarta) {
-//                 console.log('Has seleccionado la misma carta dos veces.');
-//             } else {
-//                 console.log('Has seleccionado dos cartas diferentes.');
-//             }
-
-//             // Reiniciar las variables para la siguiente comparación
-//             primerCarta = null;
-//             segundoCarta = null;
-//         }
-//     });
-// });
