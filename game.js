@@ -78,12 +78,13 @@ function flipCards() {
     /**
      * Flips the card that was clicked.
      */
+    // console.log(flippedCards)
     if (flippedCards < 2) {
-        let idDom = parseInt(document.getElementById(this.id).id);
+        /* let idDom = parseInt(document.getElementById(this.id).id);
         let cardFilter = cards.filter(function(card){
             
             return parseInt(card.id) === idDom;
-        })
+        }) */
         this.dataset.flipped = true;
         cards[this.id - 1].flipped = true;
 
@@ -93,18 +94,17 @@ function flipCards() {
             
         // },2000);
         flippedCards++;
-        if (flippedCards  == 2){
-            const selectedCards = document.querySelectorAll("div[data-flipped='true']");
-            
-            matchPair(selectedCards);
+       if (flippedCards  == 2){
+            matchPair();
+            flippedCards = 0;
+            /* console.log(flippedCards) */
         }
-    }
-    else {
+    } 
+    /* else {
         flippedCards = 0;
         selectedCards = [];
-    }
+    } */
 }
-
 let flippedCards = 0;
 
 cards2.forEach(function (card) {
@@ -114,31 +114,72 @@ cards2.forEach(function (card) {
     card.addEventListener("click", flipCards);
 });
 
-function matchPair(selectedCards) {
-    // console.log(selectedCards[0].getAttribute("data-value"));
-    // console.log(selectedCards[1].getAttribute("data-value"));
-    if (selectedCards[0].getAttribute("data-value") != selectedCards[1].getAttribute("data-value") ){
-        console.log( cards[selectedCards[0].getAttribute("id")].flipped);
-        cards[selectedCards[0].getAttribute("id")].flipped = false;
-        document.getElementById(selectedCards[0].id).setAttribute("data-flipped", "false");
+/* var timer1;
+var timer2; */
+function matchPair() {
+    let selectedCards = Array.from(document.querySelectorAll("div[data-flipped='true']"));
+    console.log(selectedCards[0])
+    console.log(selectedCards[1])
+    console.log(selectedCards);
+    if (selectedCards[0].getAttribute("data-value") != selectedCards[1].getAttribute("data-value")){
+        console.log("distintos");
+     } else {
+        console.log("Iguales");
+     }
+     selectedCards = [];
+     
+        /* cards[selectedCards[0].getAttribute("id")].flipped = false; */
+       /*  document.getElementById(selectedCards[0].id).setAttribute("data-flipped", "false"); */
         // document.getElementById(selectedCards[0].id).querySelector("img").src = cards[selectedCards[0].getAttribute("id")].backImg;
-        let timer1 = setTimeout(() => {
-            document.getElementById(selectedCards[0].id).querySelector("img").src = cards[selectedCards[0].getAttribute("id")].backImg;
-            clearTimeout(timer1);
-        }, 1000);
-        console.log("try");
+        /* let timer1 = setTimeout(() => {
+            document.getElementById(selectedCards[0].id).querySelector("img").src = cards[selectedCards[0].id].backImg;
+        }, 1000); */
 
-        cards[selectedCards[1].getAttribute("id")].flipped = false;
-        document.getElementById(selectedCards[1].id).setAttribute("data-flipped", "false");
+        /* cards[selectedCards[1].getAttribute("id")].flipped = false;
+        document.getElementById(selectedCards[1].id).setAttribute("data-flipped", "false"); */
         // document.getElementById(selectedCards[1].id).querySelector("img").src = cards[selectedCards[1].getAttribute("id")].backImg;
-        let timer2 = setTimeout(() => {
-            document.getElementById(selectedCards[1].id).querySelector("img").src = cards[selectedCards[1].getAttribute("id")].backImg;
-            clearTimeout(timer2);
-        }, 1000);  
-    }
-    
-}
+       /* let timer2 = setTimeout(() => {
+            document.getElementById(selectedCards[1].id).querySelector("img").src = cards[selectedCards[1].id].backImg;
+        }, 1000); */
+   
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       /*  if (selectedCards[0].getAttribute("data-value") == selectedCards[1].getAttribute("data-value")){
+            selectedCards = [];
+            flippedCards = 0;
+        } else {
+            setTimeout(() => {
+            cards[selectedCards[0].getAttribute("id")].flipped = false;
+            document.getElementById(selectedCards[0].id).setAttribute("data-flipped", "false");
+            document.getElementById(selectedCards[0].id).querySelector("img").src = cards[selectedCards[0].getAttribute("id")].backImg;
+            cards[selectedCards[1].getAttribute("id")].flipped = false;
+            document.getElementById(selectedCards[1].id).setAttribute("data-flipped", "false");
+            document.getElementById(selectedCards[1].id).querySelector("img").src = cards[selectedCards[1].getAttribute("id")].backImg;
+            }, 600);   
+        }   */
+}
+/* function clearTime(){
+    clearTimeout(timer1);
+    clearTimeout(timer2);
+}
+ */
 //  function flipCard(flipped) {
     
 //     this.dataset.flipped = flipped;
