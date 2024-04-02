@@ -74,38 +74,73 @@ initialiseGame(9);
 
 cards2 = document.querySelectorAll(".card");
 
+let flippedCards = 0;
+let firstCard = null;
+let firstCardId;
+let score = 0;
 function flipCards() {
     /**
      * Flips the card that was clicked.
      */
+    if (flippedCards === 2){
+        return;
+    }
+
+    const value = this.dataset.value;
+    this.dataset.flipped= true;
+    this.firstChild.src = "./img/front-" + value + ".jpeg";
+    flippedCards++;
     // console.log(flippedCards)
-    if (flippedCards < 2) {
+    if (flippedCards === 1) {
+        firstCard = this.dataset.value;
+        firstCardId = this.id
+        console.log(firstCard);
+        console.log(firstCardId);
+    } else if (flippedCards === 2){
+        let secondCard = this.dataset.value;
+        console.log(secondCard);
+        if(firstCard === secondCard){
+            flippedCards = 0;
+            firstCard = 0;
+            score++;
+        } else {
+            setTimeout(() => {
+                let element = document.getElementById(firstCardId);
+                element.dataset.flipped = false;
+                element.firstChild.src = "./img/back.jpeg";
+                this.dataset.flipped = false;
+                this.firstChild.src = "./img/back.jpeg";
+                flippedCards = 0;
+                firstCard = 0;
+            }, 1000);
+        }
+    }
         /* let idDom = parseInt(document.getElementById(this.id).id);
         let cardFilter = cards.filter(function(card){
             
             return parseInt(card.id) === idDom;
         }) */
-        this.dataset.flipped = true;
+        /* this.dataset.flipped = true;
         cards[this.id - 1].flipped = true;
 
-        document.getElementById(this.id).querySelector("img").src = "./img/front-" + this.dataset.value + ".jpeg";
+        document.getElementById(this.id).querySelector("img").src = "./img/front-" + this.dataset.value + ".jpeg"; */
         
         // setTimeout(() => {
             
         // },2000);
-        flippedCards++;
+       /*  flippedCards++;
        if (flippedCards  == 2){
             matchPair();
-            flippedCards = 0;
+            flippedCards = 0; */
             /* console.log(flippedCards) */
-        }
-    } 
+     /*    }
+    }  */
     /* else {
         flippedCards = 0;
         selectedCards = [];
     } */
 }
-let flippedCards = 0;
+
 
 cards2.forEach(function (card) {
     /**
@@ -116,7 +151,7 @@ cards2.forEach(function (card) {
 
 /* var timer1;
 var timer2; */
-function matchPair() {
+/* function matchPair() {
     let selectedCards = Array.from(document.querySelectorAll("div[data-flipped='true']"));
     console.log(selectedCards[0])
     console.log(selectedCards[1])
@@ -126,7 +161,7 @@ function matchPair() {
      } else {
         console.log("Iguales");
      }
-     selectedCards = [];
+     selectedCards = []; */
      
         /* cards[selectedCards[0].getAttribute("id")].flipped = false; */
        /*  document.getElementById(selectedCards[0].id).setAttribute("data-flipped", "false"); */
@@ -174,7 +209,6 @@ function matchPair() {
             document.getElementById(selectedCards[1].id).querySelector("img").src = cards[selectedCards[1].getAttribute("id")].backImg;
             }, 600);   
         }   */
-}
 /* function clearTime(){
     clearTimeout(timer1);
     clearTimeout(timer2);
