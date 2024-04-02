@@ -29,7 +29,6 @@ function injectCards(cards) {
     for (i = 0; i < cards.length; i++) {
         this.element = document.createElement("div");
         this.element.id = (i + 1);
-        // cards[i].id = (i + 1);
         this.element.className = "card";
         this.element.dataset.value = cards[i].value;
         this.element.dataset.flipped = cards[i].flipped;
@@ -39,7 +38,7 @@ function injectCards(cards) {
 
         this.element = document.createElement("img");
         this.element.src = cards[i].backImg;
-
+        startTimer();
         const card = document.getElementById(i + 1);
         card.appendChild(this.element);
     }
@@ -57,7 +56,6 @@ function initialiseGame(numPairs) {
     let card;
 
     for (i = 0; i < numPairs; i++) {
-        // card = new CreateCard (i + 1, i + 1, `./img/front-${i + 1}.jpeg`);
         card = { id: i + 1, value: (i + 1), flipped: false, backImg: `./img/back.jpeg` };
         cards[i] = card;
     }
@@ -77,7 +75,6 @@ cards2 = document.querySelectorAll(".card");
 let flippedCards = 0;
 let firstCard = null;
 let firstCardId;
-let score = 0;
 function flipCards() {
     /**
      * Flips the card that was clicked.
@@ -90,7 +87,6 @@ function flipCards() {
     this.dataset.flipped= true;
     this.firstChild.src = "./img/front-" + value + ".jpeg";
     flippedCards++;
-    // console.log(flippedCards)
     if (flippedCards === 1) {
         firstCard = this.dataset.value;
         firstCardId = this.id
@@ -102,7 +98,7 @@ function flipCards() {
         if(firstCard === secondCard){
             flippedCards = 0;
             firstCard = 0;
-            score++;
+            hitEnemy();
         } else {
             setTimeout(() => {
                 let element = document.getElementById(firstCardId);
@@ -112,33 +108,10 @@ function flipCards() {
                 this.firstChild.src = "./img/back.jpeg";
                 flippedCards = 0;
                 firstCard = 0;
+                hitCharacter();
             }, 1000);
         }
     }
-        /* let idDom = parseInt(document.getElementById(this.id).id);
-        let cardFilter = cards.filter(function(card){
-            
-            return parseInt(card.id) === idDom;
-        }) */
-        /* this.dataset.flipped = true;
-        cards[this.id - 1].flipped = true;
-
-        document.getElementById(this.id).querySelector("img").src = "./img/front-" + this.dataset.value + ".jpeg"; */
-        
-        // setTimeout(() => {
-            
-        // },2000);
-       /*  flippedCards++;
-       if (flippedCards  == 2){
-            matchPair();
-            flippedCards = 0; */
-            /* console.log(flippedCards) */
-     /*    }
-    }  */
-    /* else {
-        flippedCards = 0;
-        selectedCards = [];
-    } */
 }
 
 
@@ -149,76 +122,40 @@ cards2.forEach(function (card) {
     card.addEventListener("click", flipCards);
 });
 
-/* var timer1;
-var timer2; */
-/* function matchPair() {
-    let selectedCards = Array.from(document.querySelectorAll("div[data-flipped='true']"));
-    console.log(selectedCards[0])
-    console.log(selectedCards[1])
-    console.log(selectedCards);
-    if (selectedCards[0].getAttribute("data-value") != selectedCards[1].getAttribute("data-value")){
-        console.log("distintos");
-     } else {
-        console.log("Iguales");
-     }
-     selectedCards = []; */
-     
-        /* cards[selectedCards[0].getAttribute("id")].flipped = false; */
-       /*  document.getElementById(selectedCards[0].id).setAttribute("data-flipped", "false"); */
-        // document.getElementById(selectedCards[0].id).querySelector("img").src = cards[selectedCards[0].getAttribute("id")].backImg;
-        /* let timer1 = setTimeout(() => {
-            document.getElementById(selectedCards[0].id).querySelector("img").src = cards[selectedCards[0].id].backImg;
-        }, 1000); */
+let characterLife = 5;
+let enemyLife = 9;
 
-        /* cards[selectedCards[1].getAttribute("id")].flipped = false;
-        document.getElementById(selectedCards[1].id).setAttribute("data-flipped", "false"); */
-        // document.getElementById(selectedCards[1].id).querySelector("img").src = cards[selectedCards[1].getAttribute("id")].backImg;
-       /* let timer2 = setTimeout(() => {
-            document.getElementById(selectedCards[1].id).querySelector("img").src = cards[selectedCards[1].id].backImg;
-        }, 1000); */
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       /*  if (selectedCards[0].getAttribute("data-value") == selectedCards[1].getAttribute("data-value")){
-            selectedCards = [];
-            flippedCards = 0;
-        } else {
-            setTimeout(() => {
-            cards[selectedCards[0].getAttribute("id")].flipped = false;
-            document.getElementById(selectedCards[0].id).setAttribute("data-flipped", "false");
-            document.getElementById(selectedCards[0].id).querySelector("img").src = cards[selectedCards[0].getAttribute("id")].backImg;
-            cards[selectedCards[1].getAttribute("id")].flipped = false;
-            document.getElementById(selectedCards[1].id).setAttribute("data-flipped", "false");
-            document.getElementById(selectedCards[1].id).querySelector("img").src = cards[selectedCards[1].getAttribute("id")].backImg;
-            }, 600);   
-        }   */
-/* function clearTime(){
-    clearTimeout(timer1);
-    clearTimeout(timer2);
+function hitCharacter(){
+    characterLife--;
+    document.getElementById('character_life').textContent = characterLife;
+    if(characterLife <= 0){
+        alert("Has sido derrotado");
+        setTimeout(() => {
+        window.location.reload();   
+        }, 300);
+    }
 }
- */
-//  function flipCard(flipped) {
-    
-//     this.dataset.flipped = flipped;
-//     cards[this.id - 1].flipped = flipped;
 
-//     document.getElementById(this.id).querySelector("img").src = "./img/front-" + this.dataset.value + ".jpeg";
-//     console.log(flippedCards);
-//  }
+function hitEnemy(){
+    enemyLife--;
+    document.getElementById('enemy_life').textContent = enemyLife;
+}
+function startTimer(){
+    let seconds = 59;
+    let minutes = 0;
+    let timer = document.getElementById("timer");
+
+    function updateTimer(){
+        seconds--;
+        if(seconds < 0){
+            seconds = 59;
+            minutes--
+        }
+        if(minutes === 0 && seconds === 0){
+            window.location.reload();
+        }
+        let formatTimer = (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+        timer.textContent = formatTimer;
+    }
+    setInterval(updateTimer, 1000);
+}
